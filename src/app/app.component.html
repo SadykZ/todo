@@ -1,20 +1,53 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container" align="center">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h1>todos</h1>
+        <div class="col-md-12 div-custom">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="checkbox" *ngIf="storeService.todos.length" #isSelectAll [checked]="storeService.IsAllItemsSelected()" (click)="storeService.SelectAll(isSelectAll.checked)" style="margin: 10px;">
+                </div>
+                <div class="col-md-8">
+                        <input placeholder="Что должно быть сделано?" (keyup.enter)="addTodo()" [(ngModel)]="newTodoText" class="edit-form input-custom">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                        <table *ngIf="storeService.todos.length > 0" class="table table-hover">
+                                <tr *ngFor="let todo of storeService.todos">
+                                    <td>
+                                        <input type="checkbox" *ngIf="!todo.editing" [checked] = "todo.selected" (click)="selectTodo(todo)" class="form-check-input">
+                                    </td>
+                                    <td>
+                                        <div *ngIf="!todo.editing">
+                                            <label class="input-custom" *ngIf="todo.selected" (dblclick)="todo.editing = true;" style="width: 150px;">
+                                                <s>{{todo.title}}</s>
+                                            </label>
+                                            <label class="input-custom" *ngIf="!todo.selected" (dblclick)="todo.editing = true;" style="width: 150px    ;">
+                                                <b>{{todo.title}}</b>
+                                            </label>
+                                        </div>
+                                        <input type="text" *ngIf="todo.editing" #editedTodo [value]="todo.title" (keyup.escape)="todo.editing = false" (blur)="todo.editing = false" (keyup.enter)="updateTodo(todo, editedTodo.value)" class="form-control input-custom">
+                                    </td>
+                                    <td>
+                                        <button style="float: right;" *ngIf="!todo.editing">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true" (click)="removeTodo(todo)"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                </div>
+                
+            </div>
+        </div>
+        
+        <span><strong>{{storeService.getItems(false).length != 0 ? storeService.getItems(false).length : ""}}</strong>
+            {{storeService.getItems(false).length == 0 ? 'нет задач' : 
+            storeService.getItems(false).length == 1 ? 'задача' : 
+            storeService.getItems(false).length >= 2 && storeService.getItems(false).length <= 4 ? 'задачи' :
+            'задач'}}
+        </span>
+        <button *ngIf="storeService.getItems(true).length > 0" (click)="removeSelectedTodos()" class="btn btn-link">Удалить выбранные</button>
+    </div>
+    <div class="col-md-4"></div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-

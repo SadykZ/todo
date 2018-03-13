@@ -1,0 +1,25 @@
+h1
+{
+    color: red;
+    font-size: 72pt;
+    opacity: 0.2;
+}
+ul
+{
+    list-style-type: none;
+}
+.input-custom
+{
+    width: 100%;
+}
+.edit-form
+{
+    border-width: 0px;
+    padding: 10px;
+}
+.div-custom
+{
+    border-width: 1px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
